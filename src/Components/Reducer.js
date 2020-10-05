@@ -1,6 +1,6 @@
 export const initialState ={
     basket : [],
-    // user: null
+    user: null
 }
 
 function reducer(state, action){
@@ -16,8 +16,19 @@ function reducer(state, action){
 
         case 'REMOVE_FROM_BASKET':
             // logic for removing items from basket
+
+            // cloning the basket
+            let newBasket = [...state.basket];
+            const index = state.basket.findIndex((basketItem) => basketItem.id === action.id);
+            if(index >= 0){
+                // item exits in basket and remove it
+                newBasket.splice(index, 1);
+            } else {
+                console.warn(`Can't remove product (id: ${action.id}) as its not in the basket`)
+            }
             return { 
                 ...state,
+                basket: newBasket,
             }
             break;
 
